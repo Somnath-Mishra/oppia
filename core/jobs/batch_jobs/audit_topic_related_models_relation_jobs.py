@@ -90,9 +90,9 @@ class ValidateTopicModelsJob(base_jobs.JobBase):
         Args:
             topic_model: TopicModel. The TopicModel instance to validate.
             topic_rights_models: List[TopicRightsModel]. List of
-                TopicRightsModel instances related to the topic.
+                TopicRightsModel.
             topic_summary_models: List[TopicSummaryModel]. List of
-                TopicSummaryModel instances related to the topic.
+                TopicSummaryModel.
 
         Returns:
             List[String]. List of validation errors (if any).
