@@ -124,12 +124,3 @@ class ValidateTopicModelsJob(base_jobs.JobBase):
                 target_kind='TopicSummaryModel',
                 target_id=topic_model.name))
         return errors
-
-    def _count_models(
-        self,
-        models_pcollection: beam.PCollection) -> beam.PCollection[int]:
-        """Returns the count of models."""
-
-        return (
-            models_pcollection
-            | 'Count all elements' >> beam.combiners.Count.Globally())
