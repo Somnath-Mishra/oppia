@@ -1634,7 +1634,7 @@ class TopicServicesUnitTests(test_utils.GenericTestBase):
             caching_services.get_multi(
                 caching_services.CACHE_NAMESPACE_TOPIC, None, [self.TOPIC_ID]
             ),
-            'Topic is not in cache'
+            'Topic is present in cache'
         )
 
     def test_delete_topic(self) -> None:
