@@ -170,6 +170,7 @@ export class SubtopicEditorTabComponent implements OnInit, OnDestroy {
 
   onSubtopicUrlFragmentChange(urlFragment: string): void {
     this.editableUrlFragment = urlFragment;
+    this.updateSubtopicUrlFragment(urlFragment);
   }
 
   updateSubtopicUrlFragment(urlFragment: string): void {

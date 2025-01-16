@@ -7,7 +7,7 @@
          [ngModelOptions]="{ standalone: true }"
          placeholder="{{placeholder}}"
          maxlength="{{maxLength}}"
-         [ngClass]="{ 'is-invalid': fragmentExists || !validUrlFragmentRegex.test(urlFragment.trim()) }"
+         [ngClass]="{ 'is-invalid': fragmentIsDuplicate || !validUrlFragmentRegex.test(urlFragment.trim()) }"
          (change)="onChange()">
   <span class="oppia-input-box-subtitle">
     <em>
@@ -22,7 +22,7 @@
        [hidden]="urlFragment === '' || validUrlFragmentRegex.test(urlFragment.trim())">
     <b>Please use only lowercase letters and hyphens.</b>
   </div>
-  <div *ngIf="fragmentExists" class="oppia-input-box-subtitle text-danger">
+  <div *ngIf="fragmentIsDuplicate" class="oppia-input-box-subtitle text-danger">
     <em>This {{ fragmentType }} URL fragment already exists.</em>
   </div>
 </div>

@@ -28,7 +28,7 @@
                                 [maxLength]="MAX_CHARS_IN_TOPIC_URL_FRAGMENT"
                                 fragmentType="topic"
                                 [generatedUrlPrefix]="generatedUrlPrefix"
-                                [(fragmentExists)]="topicUrlFragmentExists"
+                                [fragmentIsDuplicate]="topicUrlFragmentExists"
                                 inputId="topicUrlFragment"
                                 accessingPage="topic viewer"
                                 [(urlFragment)]="newlyCreatedTopic.urlFragment"

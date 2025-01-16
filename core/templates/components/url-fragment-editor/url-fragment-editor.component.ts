@@ -24,13 +24,21 @@ import {AppConstants} from 'app.constants';
   templateUrl: './url-fragment-editor.component.html',
 })
 export class UrlFragmentEditorComponent {
-  @Input() label!: string;
-  @Input() placeholder!: string;
-  @Input() maxLength: number = 50;
-  @Input() fragmentType: string = 'story';
-  @Input() generatedUrlPrefix!: string;
-  @Input() fragmentExists: boolean = false;
-  @Input() accessingPage: string = '';
+  // Here label is the heading of the input box.
+  @Input() label: string;
+  // Here placeholder specifies the text to display in the input box.
+  @Input() placeholder: string;
+  // Here maxLength specifies the maximum number of acceptable characters.
+  @Input() maxLength: number;
+  // Here fragmentType indicates the type of fragment, such as "story" or "topic".
+  @Input() fragmentType: string;
+  // Here generatedUrlPrefix is the URL prefix format, and the URL fragment is appended to generate the URL for accessing the page.
+  @Input() generatedUrlPrefix: string;
+  // Here fragmentIsDuplicate indicates whether the URL fragment already exists.
+  @Input() fragmentIsDuplicate: boolean;
+  // Here accessingPage specifies the type of page being accessed using the generated URL.
+  @Input() accessingPage: string;
+  // Here disabled flag indicates whether the input field is editable or not.
   @Input() disabled: boolean = false;
   @Input() urlFragment: string = '';
   @Output() urlFragmentChange: EventEmitter<string> =

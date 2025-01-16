@@ -170,6 +170,7 @@ export class CreateNewSubtopicModalComponent
 
   onUrlFragmentChange(urlFragment: string): void {
     this.editableUrlFragment = urlFragment;
+    this.checkSubtopicExistence();
   }
 
   save(): void {

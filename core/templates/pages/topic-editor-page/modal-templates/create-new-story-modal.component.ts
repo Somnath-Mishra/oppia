@@ -78,6 +78,7 @@ export class CreateNewStoryModalComponent extends ConfirmOrCancelModal {
 
   onUrlFragmentChange(urlFragment: string): void {
     this.story.urlFragment = urlFragment;
+    this.onStoryUrlFragmentChange();
   }
 
   save(): void {

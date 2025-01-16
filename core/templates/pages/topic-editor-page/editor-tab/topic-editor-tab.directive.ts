@@ -394,6 +394,7 @@ export class TopicEditorTabComponent implements OnInit, OnDestroy {
 
   onChangeTopicEditorUrlFragment(urlFragment: string): void {
     this.editableTopicUrlFragment = urlFragment;
+    this.updateTopicUrlFragment(urlFragment);
   }
 
   updateTopicThumbnailFilename(newThumbnailFilename: string): void {

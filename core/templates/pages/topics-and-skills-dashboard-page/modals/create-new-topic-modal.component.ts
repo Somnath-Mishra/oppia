@@ -79,6 +79,7 @@ export class CreateNewTopicModalComponent extends ConfirmOrCancelModal {
 
   onUrlFragmentChange(urlFragment: string): void {
     this.newlyCreatedTopic.urlFragment = urlFragment;
+    this.onTopicUrlFragmentChange();
   }
 
   onTopicUrlFragmentChange(): void {

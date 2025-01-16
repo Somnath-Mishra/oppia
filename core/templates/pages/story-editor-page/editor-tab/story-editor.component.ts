@@ -274,6 +274,7 @@ export class StoryEditorComponent implements OnInit, OnDestroy {
 
   onStoryEditorUrlFragmentChange(urlFragment: string): void {
     this.editableUrlFragment = urlFragment;
+    this.updateStoryUrlFragment(urlFragment);
   }
 
   createNode(): void {
