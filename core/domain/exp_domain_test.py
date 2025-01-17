@@ -4092,11 +4092,9 @@ class ExplorationDomainUnitTests(test_utils.GenericTestBase):
             """Expected the Exploration object to be retrieved from the
             cache, but it was None."""
         )
-        # Here we use MyPy ignore because
-        # new_exploration_dict_retrieve_from_cache
-        # is not None as we check above assert check.
+        assert new_exploration_retrieve_from_cache is not None
         new_exploration_dict_retrieve_from_cache = (
-            new_exploration_retrieve_from_cache.to_dict()) # type: ignore[union-attr]
+            new_exploration_retrieve_from_cache.to_dict())
         self.assertEqual(
             new_exploration.to_dict(),
             new_exploration_dict_retrieve_from_cache,
@@ -4272,9 +4270,8 @@ title: Title
             """Expected the Exploration object to be retrieved from the
             cache, but it was not None."""
         )
-        # Here we use MyPy ignore because new_exploration_retrieve_from_cache
-        # is not None as we check above assert check.
-        updated_exploration = new_exploration_retrieve_from_cache.to_dict() # type: ignore[union-attr]
+        assert new_exploration_retrieve_from_cache is not None
+        updated_exploration = new_exploration_retrieve_from_cache.to_dict()
         new_exploration_dict = old_version_exploration.to_dict()
         versioned_states = exp_domain.VersionedExplorationStatesDict(
             states_schema_version=feconf.CURRENT_STATE_SCHEMA_VERSION - 1,
