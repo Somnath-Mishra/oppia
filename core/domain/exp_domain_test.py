@@ -4236,28 +4236,31 @@ title: Title
         exploration_id = 'eid'
         # Here we use MyPy ignore because we assign an OldVersionExploration
         # object to Exploration to store this object in the cache and test
-        # whether the migration is performed correctly.
-        new_exploration: exp_domain.Exploration = (
+        # whether the migration is performed correctly. Also, here we forcefully
+        # change the old_version_exploration object to exp_domain.Exploration
+        # because, to store this object in the cache using set_multi, the
+        # namespace must match. This ensures the object is stored against
+        # the correct model.
+        old_version_exploration: exp_domain.Exploration = (
             create_old_schema_exploration( # type: ignore[assignment]
             exploration_id, old_version_yaml_content))
         latest_version_exploration = exp_domain.Exploration.from_yaml(
             'eid', old_version_yaml_content)
         self.assertNotEqual(
-            new_exploration.to_dict(),
+            old_version_exploration.to_dict(),
             latest_version_exploration.to_dict(),
-            """Old version Exploration schema is same as latest Exploration
+            """Old version Exploration schema is not same as latest Exploration
             schema"""
         )
-        sub_namespace = (
-          str(new_exploration.version) if new_exploration.version else None)
+        sub_namespace = str(old_version_exploration.version)
         is_properly_cacheable = caching_services.set_multi(
             namespace=caching_services.CACHE_NAMESPACE_EXPLORATION,
             sub_namespace=sub_namespace,
-            id_value_mapping={exploration_id: new_exploration})
+            id_value_mapping={exploration_id: old_version_exploration})
         self.assertTrue(
             is_properly_cacheable,
             """The operation to store the Exploration object in the cache
-            has failed"""
+            has succeeded."""
         )
         new_exploration_retrieve_from_cache = caching_services.get_multi(
             namespace=caching_services.CACHE_NAMESPACE_EXPLORATION,
@@ -4267,12 +4270,12 @@ title: Title
         self.assertIsNotNone(
             new_exploration_retrieve_from_cache,
             """Expected the Exploration object to be retrieved from the
-            cache, but it was None."""
+            cache, but it was not None."""
         )
         # Here we use MyPy ignore because new_exploration_retrieve_from_cache
         # is not None as we check above assert check.
         updated_exploration = new_exploration_retrieve_from_cache.to_dict() # type: ignore[union-attr]
-        new_exploration_dict = new_exploration.to_dict()
+        new_exploration_dict = old_version_exploration.to_dict()
         versioned_states = exp_domain.VersionedExplorationStatesDict(
             states_schema_version=feconf.CURRENT_STATE_SCHEMA_VERSION - 1,
             states=new_exploration_dict['states'])
