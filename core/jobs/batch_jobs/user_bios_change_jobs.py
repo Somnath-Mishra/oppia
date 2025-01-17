@@ -36,40 +36,31 @@ if MYPY: # pragma: no cover
 class ChangeUserNullBiosToEmptyStringJob(base_jobs.JobBase):
     """Change user null bios to empty string and save to Datastore."""
 
+    DATASTORE_UPDATES_ALLOWED = True
+
     def run(self) -> beam.PCollection[job_run_result.JobRunResult]:
         user_settings_query = user_models.UserSettingsModel.get_all()
-        
         user_settings_models = (
             self.pipeline
             | 'Get all UserSettingsModels' >> ndb_io.GetModels(user_settings_query)
         )
-
         users_with_invalid_bios = (
             user_settings_models
             | 'Filter users with invalid bios' >> beam.Filter(
-                lambda user: not isinstance(user.user_bio, str) or len(user.user_bio) > 2000
+                lambda user: not isinstance(user.user_bio, str)
             )
         )
-
         updated_users = (
             users_with_invalid_bios
             | 'Set invalid bios to empty string' >> beam.Map(
                 lambda user: (setattr(user, 'user_bio', ""), user)[1]
             )
         )
-
-        deleted_users = (
-            users_with_invalid_bios
-            | 'Extract NDB keys from UserSettingsModel' >> beam.Map(lambda model: model.key)
-            | 'Delete invalid users' >> ndb_io.DeleteModels()
-        )
-
-
-        saved_users = (
-            updated_users
-            | 'Save updated user models to Datastore' >> ndb_io.PutModels()
-        )
-
+        if self.DATASTORE_UPDATES_ALLOWED:
+            saved_users = (
+                updated_users
+                | 'Save updated user models to Datastore' >> ndb_io.PutModels()
+            )
         test_output = (
             updated_users
             | 'Generate test output' >> beam.Map(
@@ -92,3 +83,11 @@ class ChangeUserNullBiosToEmptyStringJob(base_jobs.JobBase):
             success_message)
             | 'Combine reported results' >> beam.Flatten()
         )
+
+
+class AuditChangeUserNullBiosToEmptyStringJob(
+    ChangeUserNullBiosToEmptyStringJob
+):
+    """Job that audits ChangeUserNullBiosToEmptyStringJob."""
+
+    DATASTORE_UPDATES_ALLOWED = False

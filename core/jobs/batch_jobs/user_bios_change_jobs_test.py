@@ -45,6 +45,11 @@ class ChangeUserNullBiosToEmptyStringJobTests(job_test_utils.JobTestBase):
 
     USER_USERNAME_1: Final = 'user_1'
     USER_USERNAME_2: Final = 'user_2'
+    USER_USERNAME_3: Final = 'user_3'
+
+    USER_ID_1: Final = 'user_id_1'
+    USER_ID_2: Final = 'user_id_2'
+    USER_ID_3: Final = 'user_id_3'
 
     def test_empty_storage(self) -> None:
         self.assert_job_output_is_empty()
@@ -52,9 +57,10 @@ class ChangeUserNullBiosToEmptyStringJobTests(job_test_utils.JobTestBase):
     def test_user_with_null_bio(self) -> None:
         user = self.create_model(
             user_models.UserSettingsModel,
-            id='user_id_1',
+            id=self.USER_ID_1,
             username=self.USER_USERNAME_1,
             email='a@a.com',
+            user_bio=None,
         )
         user.update_timestamps()
         self.put_multi([user])
@@ -63,24 +69,20 @@ class ChangeUserNullBiosToEmptyStringJobTests(job_test_utils.JobTestBase):
             job_run_result.JobRunResult(
                 stdout=f"Test Output - Username: {self.USER_USERNAME_1}, New Bio: "),
         ])
+        user_setting_model = user_models.UserSettingsModel.get_by_email('a@a.com')
+        self.assertIsNotNone(
+            user_setting_model,
+            """retrieve user_setting is not None"""
+        )
+        self.assertTrue(
+            isinstance(user_setting_model.user_bio,str),
+            """user_bio is empty string"""
+        )
 
-        # updated_user = datastore_services.get_multi([
-        #     datastore_services.Key(
-        #         user_models.UserSettingsModel,
-        #         'user_id_1'
-        #     )])[0].__dict__
-
-        # user_settings = f"{updated_user}"
-        # user_bio_match = re.search(r"user_bio='(.*?)'", user_settings)
-        # user_bio = user_bio_match.group(1)
-        # updated_user = job_utils.get_ndb_model_from_beam_entity()
-        # user_bio = job_utils.get_model_property(user, 'user_bio')
-        # self.assertIsInstance(user_bio, str)
-
-    def test_user_with_valid_bio(self) -> None:
+    def test_user_with_short_bio(self) -> None:
         user = self.create_model(
             user_models.UserSettingsModel,
-            id='user_id_2',
+            id=self.USER_ID_2,
             username=self.USER_USERNAME_2,
             email='b@b.com',
             user_bio='Test Bio'
@@ -89,13 +91,29 @@ class ChangeUserNullBiosToEmptyStringJobTests(job_test_utils.JobTestBase):
         self.put_multi([user])
 
         self.assert_job_output_is_empty()
-        # updated_user = datastore_services.get_multi([
-        #     datastore_services.Key(
-        #         user_models.UserSettingsModel,
-        #         'user_id_2'
-        #     )])[0]
-        # user_settings = f"{updated_user}"
-        # user_bio_match = re.search(r"user_bio='(.*?)'", user_settings)
-        # user_bio = user_bio_match.group(1)
-        # user_bio = job_utils.get_model_property(user, 'user_bio')
-        # self.assertEqual(user_bio, 'Test Bio')
+        user_setting_model = user_models.UserSettingsModel.get_by_email('b@b.com')
+        self.assertEqual(
+            user_setting_model.user_bio,
+            user.user_bio,
+            """user_bio is empty string"""
+        )
+
+    def test_user_with_long_bio(self) -> None:
+        user_long_bio = "A" * 3000
+        user = self.create_model(
+            user_models.UserSettingsModel,
+            id=self.USER_ID_3,
+            username=self.USER_USERNAME_3,
+            email='c@c.com',
+            user_bio=user_long_bio
+        )
+        user.update_timestamps()
+        self.put_multi([user])
+
+        self.assert_job_output_is_empty()
+        user_setting_model = user_models.UserSettingsModel.get_by_email('c@c.com')
+        self.assertEqual(
+            user_setting_model.user_bio,
+            user.user_bio,
+            """user_bio is empty string"""
+        )
