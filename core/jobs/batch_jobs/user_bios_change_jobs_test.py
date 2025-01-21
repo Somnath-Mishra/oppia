@@ -22,15 +22,12 @@ from core.jobs import job_test_utils
 from core.jobs.batch_jobs import user_bios_change_jobs
 from core.jobs.types import job_run_result
 from core.platform import models
-import re
-from core.jobs import job_utils
 
 from typing import Final, Type
 
 MYPY = False
 if MYPY:
     from mypy_imports import user_models
-    from mypy_imports import datastore_services
 
 (user_models,) = models.Registry.import_models([models.Names.USER])
 
