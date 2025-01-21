@@ -72,11 +72,11 @@ class ChangeUserNullBiosToEmptyStringJobTests(job_test_utils.JobTestBase):
         user_setting_model = user_models.UserSettingsModel.get_by_email('a@a.com')
         self.assertIsNotNone(
             user_setting_model,
-            """retrieve user_setting is not None"""
+            """retrieve user_setting model is None"""
         )
         self.assertTrue(
             isinstance(user_setting_model.user_bio,str),
-            """user_bio is empty string"""
+            """user_bio is not type of string"""
         )
 
     def test_user_with_short_bio(self) -> None:
@@ -95,7 +95,7 @@ class ChangeUserNullBiosToEmptyStringJobTests(job_test_utils.JobTestBase):
         self.assertEqual(
             user_setting_model.user_bio,
             user.user_bio,
-            """user_bio is empty string"""
+            """user_bio is not same as expected"""
         )
 
     def test_user_with_long_bio(self) -> None:
@@ -115,5 +115,5 @@ class ChangeUserNullBiosToEmptyStringJobTests(job_test_utils.JobTestBase):
         self.assertEqual(
             user_setting_model.user_bio,
             user.user_bio,
-            """user_bio is empty string"""
+            """user_bio is not same as expected"""
         )
