@@ -21,6 +21,7 @@ from __future__ import annotations
 import copy
 import json
 import os
+from unittest import mock
 
 from core import feconf
 from core import utils
@@ -4102,7 +4103,11 @@ class ExplorationDomainUnitTests(test_utils.GenericTestBase):
             not same"""
         )
 
-    def test_migrate_state_schema(self) -> None:
+    @mock.patch('core.domain.caching_services._get_memcache_key')
+    def test_migrate_state_schema(
+        self,
+        mock_import_module: mock.MagicMock
+    ) -> None:
         """Checks if the state schema version is migrated properly.
         The process involves storing an older version of Exploration object
         with an older state schema version in the cache. This is achieved
@@ -4231,19 +4236,13 @@ states_schema_version: 41
 tags: []
 title: Title
 """)
-        exploration_id = 'eid'
-        # Here we use MyPy ignore because we assign an OldVersionExploration
-        # object to Exploration to store this object in the cache and test
-        # whether the migration is performed correctly. Also, here we forcefully
-        # change the old_version_exploration object to exp_domain.Exploration
-        # because, to store this object in the cache using set_multi, the
-        # namespace must match. This ensures the object is stored against
-        # the correct model.
-        old_version_exploration: exp_domain.Exploration = (
-            create_old_schema_exploration( # type: ignore[assignment]
+        mock_import_module.return_value = 'mocked_memcache_key'
+        exploration_id = 'mocked_memcache_key'
+        old_version_exploration = (
+            create_old_schema_exploration(
             exploration_id, old_version_yaml_content))
         latest_version_exploration = exp_domain.Exploration.from_yaml(
-            'eid', old_version_yaml_content)
+            exploration_id, old_version_yaml_content)
         self.assertNotEqual(
             old_version_exploration.to_dict(),
             latest_version_exploration.to_dict(),
@@ -4251,10 +4250,13 @@ title: Title
             schema"""
         )
         sub_namespace = str(old_version_exploration.version)
-        is_properly_cacheable = caching_services.set_multi(
+        # Here we use MyPy ignore because no overload variant
+        # of "set_multi" matches argument types
+        # "Dict[str, OldVersionExploration]".
+        is_properly_cacheable = caching_services.set_multi( # type: ignore[call-overload]
             namespace=caching_services.CACHE_NAMESPACE_EXPLORATION,
             sub_namespace=sub_namespace,
-            id_value_mapping={exploration_id: old_version_exploration})
+            id_value_mapping={'mocked_memcache_key': old_version_exploration})
         self.assertTrue(
             is_properly_cacheable,
             """The operation to store the Exploration object in the cache
