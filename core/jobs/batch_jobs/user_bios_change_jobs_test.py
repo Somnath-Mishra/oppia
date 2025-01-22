@@ -64,15 +64,17 @@ class ChangeUserNullBiosToEmptyStringJobTests(job_test_utils.JobTestBase):
 
         self.assert_job_output_is([
             job_run_result.JobRunResult(
-                stdout=f"Test Output - Username: {self.USER_USERNAME_1}, New Bio: "),
+                stdout=f"""Test Output - Username: {self.USER_USERNAME_1}, New Bio: """), # pylint: disable=line-too-long
         ])
-        user_setting_model = user_models.UserSettingsModel.get_by_email('a@a.com')
+        user_setting_model = user_models.UserSettingsModel.get_by_email(
+            'a@a.com')
         self.assertIsNotNone(
             user_setting_model,
             """retrieve user_setting model is None"""
         )
+        assert user_setting_model is not None
         self.assertTrue(
-            isinstance(user_setting_model.user_bio,str),
+            isinstance(user_setting_model.user_bio, str),
             """user_bio is not type of string"""
         )
 
@@ -88,7 +90,9 @@ class ChangeUserNullBiosToEmptyStringJobTests(job_test_utils.JobTestBase):
         self.put_multi([user])
 
         self.assert_job_output_is_empty()
-        user_setting_model = user_models.UserSettingsModel.get_by_email('b@b.com')
+        user_setting_model = user_models.UserSettingsModel.get_by_email(
+            'b@b.com')
+        assert user_setting_model is not None
         self.assertEqual(
             user_setting_model.user_bio,
             user.user_bio,
@@ -96,7 +100,7 @@ class ChangeUserNullBiosToEmptyStringJobTests(job_test_utils.JobTestBase):
         )
 
     def test_user_with_long_bio(self) -> None:
-        user_long_bio = "A" * 3000
+        user_long_bio = 'A' * 3000
         user = self.create_model(
             user_models.UserSettingsModel,
             id=self.USER_ID_3,
@@ -108,7 +112,9 @@ class ChangeUserNullBiosToEmptyStringJobTests(job_test_utils.JobTestBase):
         self.put_multi([user])
 
         self.assert_job_output_is_empty()
-        user_setting_model = user_models.UserSettingsModel.get_by_email('c@c.com')
+        user_setting_model = user_models.UserSettingsModel.get_by_email(
+            'c@c.com')
+        assert user_setting_model is not None
         self.assertEqual(
             user_setting_model.user_bio,
             user.user_bio,

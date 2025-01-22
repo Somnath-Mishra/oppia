@@ -20,7 +20,6 @@ from __future__ import annotations
 
 from core.jobs import base_jobs
 from core.jobs.io import ndb_io
-from core.jobs.transforms import job_result_transforms
 from core.jobs.types import job_run_result
 from core.platform import models
 
@@ -42,7 +41,8 @@ class ChangeUserNullBiosToEmptyStringJob(base_jobs.JobBase):
         user_settings_query = user_models.UserSettingsModel.get_all()
         user_settings_models = (
             self.pipeline
-            | 'Get all UserSettingsModels' >> ndb_io.GetModels(user_settings_query)
+            | 'Get all UserSettingsModels' >> ndb_io.GetModels(
+                user_settings_query)
         )
         users_with_invalid_bios = (
             user_settings_models
@@ -50,10 +50,11 @@ class ChangeUserNullBiosToEmptyStringJob(base_jobs.JobBase):
                 lambda user: not isinstance(user.user_bio, str)
             )
         )
+        # Here we use MyPy ignore because "setattr" does not return a value.
         updated_users = (
             users_with_invalid_bios
             | 'Set invalid bios to empty string' >> beam.Map(
-                lambda user: (setattr(user, 'user_bio', ""), user)[1]
+                lambda user: (setattr(user, 'user_bio', ''), user)[1] # type: ignore[func-returns-value]
             )
         )
         if self.DATASTORE_UPDATES_ALLOWED:
@@ -65,7 +66,7 @@ class ChangeUserNullBiosToEmptyStringJob(base_jobs.JobBase):
             updated_users
             | 'Generate test output' >> beam.Map(
                 lambda user: job_run_result.JobRunResult.as_stdout(
-                    f"Test Output - Username: {user.username}, New Bio: {user.user_bio}"
+                    f"""Test Output - Username: {user.username}, New Bio: {user.user_bio}""" # pylint: disable=line-too-long
                 )
             )
         )
@@ -73,14 +74,15 @@ class ChangeUserNullBiosToEmptyStringJob(base_jobs.JobBase):
             saved_users
             | 'Log success message' >> beam.Map(
                 lambda _: job_run_result.JobRunResult.as_stdout(
-                    "Successfully updated user bios to empty string for all invalid entries."
+                    """Successfully updated user bios to empty string for all invalid entries.""" # pylint: disable=line-too-long
                 )
             )
         )
 
         return (
-            (test_output,
-            success_message)
+            (
+                test_output,
+                success_message)
             | 'Combine reported results' >> beam.Flatten()
         )
 
@@ -88,6 +90,7 @@ class ChangeUserNullBiosToEmptyStringJob(base_jobs.JobBase):
 class AuditChangeUserNullBiosToEmptyStringJob(
     ChangeUserNullBiosToEmptyStringJob
 ):
+
     """Job that audits ChangeUserNullBiosToEmptyStringJob."""
 
     DATASTORE_UPDATES_ALLOWED = False
