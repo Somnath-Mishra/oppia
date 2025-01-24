@@ -46,7 +46,6 @@ from core.domain import topic_fetchers
 from core.domain import user_domain
 from core.domain import user_services
 from core.platform import models
-from core.platform.datastore.cloud_datastore_services import ndb
 
 from typing import Dict, List, Optional, Sequence, Tuple, cast
 
@@ -1022,7 +1021,20 @@ def add_additional_story(
 def delete_topic_transactional(
     committer_id: str, topic_id: str, force_deletion: bool = False
 ) -> None:
-    """Transactional function to delete a topic."""
+    """Transactional function to delete a topic.
+
+    Args:
+        committer_id: str. ID of the committer.
+        topic_id: str. ID of the topic to be deleted.
+        force_deletion: bool. If true, the topic and its history are fully
+            deleted and are unrecoverable. Otherwise, the topic and all
+            its history are marked as deleted, but the corresponding models are
+            still retained in the datastore. This last option is the preferred
+            one.
+
+    Raises:
+        ValueError. User does not have enough rights to delete a topic.
+    """
 
     topic_rights_model = topic_models.TopicRightsModel.get(topic_id)
     topic_rights_model.delete(
@@ -1068,7 +1080,7 @@ def delete_topic(
     Raises:
         ValueError. User does not have enough rights to delete a topic.
     """
-    delete_topic_transactional(committer_id,topic_id,force_deletion)
+    delete_topic_transactional(committer_id, topic_id, force_deletion)
     # This must come after the topic is retrieved. Otherwise the memcache
     # key will be reinstated.
     caching_services.delete_multi(

@@ -45,7 +45,6 @@ from core.domain import translation_domain
 from core.domain import user_services
 from core.platform import models
 from core.tests import test_utils
-from core.domain import opportunity_services
 
 from typing import Dict, List, Optional, Union
 
@@ -1596,6 +1595,22 @@ class TopicServicesUnitTests(test_utils.GenericTestBase):
             [self.skill_id_1],
             content_id_generator.next_content_id_index
         )
+        suggestion = suggestion_services.create_suggestion(
+            feconf.SUGGESTION_TYPE_ADD_QUESTION,
+            feconf.ENTITY_TYPE_TOPIC,
+            self.TOPIC_ID,
+            1,
+            self.user_id_admin,
+            {
+                'cmd': question_domain.CMD_CREATE_NEW_FULLY_SPECIFIED_QUESTION,
+                'skill_difficulty': 0.3,
+                'skill_id': self.skill_id_1,
+                'question_dict': question.to_dict()
+            },
+            'change'
+        )
+        self.assertIsNotNone(
+            suggestion_services.get_suggestion_by_id(suggestion.suggestion_id))
         self.assertIsNotNone(topic_models.TopicRightsModel.get(
             self.TOPIC_ID))
         self.assertIsNotNone(topic_fetchers.get_topic_rights(
@@ -1606,20 +1621,23 @@ class TopicServicesUnitTests(test_utils.GenericTestBase):
             self.TOPIC_ID, strict=False))
         self.assertIsNotNone(subtopic_page_services.get_subtopic_page_by_id(
             self.TOPIC_ID, 1, strict=False))
-        def mock_delete_threads_for_multiple_entities(entity_type, entity_ids):
+        def mock_delete_threads_for_multiple_entities(
+            entity_type: str, entity_ids: List[str]
+        ) -> None:
             """Mock function to simulate failure for rollback testing."""
-            raise Exception("Intentional failure for rollback testing")
+            raise Exception('Intentional failure for rollback testing')
 
         swap_with_checks_context = self.swap_with_checks(
             feedback_services,
             'delete_threads_for_multiple_entities',
             mock_delete_threads_for_multiple_entities,
-            expected_args=[feconf.ENTITY_TYPE_TOPIC, []],
-            expected_kwargs={},
+            expected_args=[(feconf.ENTITY_TYPE_TOPIC, [])],
+            expected_kwargs=[],
             called=True
         )
         with swap_with_checks_context:
-            with self.assertRaisesRegex(Exception, "Intentional failure for rollback testing"):
+            with self.assertRaisesRegex(
+                Exception, 'Intentional failure for rollback testing'):
                 topic_services.delete_topic(self.user_id_admin, self.TOPIC_ID)
 
         self.assertIsNotNone(topic_fetchers.get_topic_rights(
@@ -1630,6 +1648,11 @@ class TopicServicesUnitTests(test_utils.GenericTestBase):
             self.TOPIC_ID, strict=False))
         self.assertIsNotNone(subtopic_page_services.get_subtopic_page_by_id(
             self.TOPIC_ID, 1, strict=False))
+        self.assertIsNotNone(
+            suggestion_services.get_suggestion_by_id(
+                suggestion.suggestion_id, strict=False
+            )
+        )
         self.assertIsNotNone(
             caching_services.get_multi(
                 caching_services.CACHE_NAMESPACE_TOPIC, None, [self.TOPIC_ID]
