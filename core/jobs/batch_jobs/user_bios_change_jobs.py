@@ -58,7 +58,7 @@ class ChangeUserNullBiosToEmptyStringJob(base_jobs.JobBase):
             )
         )
         if self.DATASTORE_UPDATES_ALLOWED:
-            saved_users = (
+            unused_saved_users = (
                 updated_users
                 | 'Save updated user models to Datastore' >> ndb_io.PutModels()
             )
@@ -70,21 +70,7 @@ class ChangeUserNullBiosToEmptyStringJob(base_jobs.JobBase):
                 )
             )
         )
-        success_message = (
-            saved_users
-            | 'Log success message' >> beam.Map(
-                lambda _: job_run_result.JobRunResult.as_stdout(
-                    """Successfully updated user bios to empty string for all invalid entries.""" # pylint: disable=line-too-long
-                )
-            )
-        )
-
-        return (
-            (
-                test_output,
-                success_message)
-            | 'Combine reported results' >> beam.Flatten()
-        )
+        return test_output
 
 
 class AuditChangeUserNullBiosToEmptyStringJob(
