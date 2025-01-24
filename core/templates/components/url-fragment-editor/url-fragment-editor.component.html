@@ -7,6 +7,7 @@
          [ngModelOptions]="{ standalone: true }"
          placeholder="{{placeholder}}"
          maxlength="{{maxLength}}"
+         [disabled]="disabled"
          [ngClass]="{ 'is-invalid': fragmentIsDuplicate || !validUrlFragmentRegex.test(urlFragment.trim()) }"
          (change)="onChange()">
   <span class="oppia-input-box-subtitle">
