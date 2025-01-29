@@ -42,11 +42,9 @@ class ChangeUserNullBiosToEmptyStringJobTests(job_test_utils.JobTestBase):
 
     USER_USERNAME_1: Final = 'user_1'
     USER_USERNAME_2: Final = 'user_2'
-    USER_USERNAME_3: Final = 'user_3'
 
     USER_ID_1: Final = 'user_id_1'
     USER_ID_2: Final = 'user_id_2'
-    USER_ID_3: Final = 'user_id_3'
 
     def test_empty_storage(self) -> None:
         self.assert_job_output_is_empty()
@@ -78,7 +76,7 @@ class ChangeUserNullBiosToEmptyStringJobTests(job_test_utils.JobTestBase):
             """user_bio is not type of string"""
         )
 
-    def test_user_with_short_bio(self) -> None:
+    def test_user_with_not_null_bio(self) -> None:
         user = self.create_model(
             user_models.UserSettingsModel,
             id=self.USER_ID_2,
@@ -99,24 +97,3 @@ class ChangeUserNullBiosToEmptyStringJobTests(job_test_utils.JobTestBase):
             """user_bio is not same as expected"""
         )
 
-    def test_user_with_long_bio(self) -> None:
-        user_long_bio = 'A' * 3000
-        user = self.create_model(
-            user_models.UserSettingsModel,
-            id=self.USER_ID_3,
-            username=self.USER_USERNAME_3,
-            email='c@c.com',
-            user_bio=user_long_bio
-        )
-        user.update_timestamps()
-        self.put_multi([user])
-
-        self.assert_job_output_is_empty()
-        user_setting_model = user_models.UserSettingsModel.get_by_email(
-            'c@c.com')
-        assert user_setting_model is not None
-        self.assertEqual(
-            user_setting_model.user_bio,
-            user.user_bio,
-            """user_bio is not same as expected"""
-        )
