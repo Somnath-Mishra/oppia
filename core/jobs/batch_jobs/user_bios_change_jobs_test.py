@@ -96,4 +96,3 @@ class ChangeUserNullBiosToEmptyStringJobTests(job_test_utils.JobTestBase):
             user.user_bio,
             """user_bio is not same as expected"""
         )
-
