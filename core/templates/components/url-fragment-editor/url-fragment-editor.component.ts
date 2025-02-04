@@ -32,7 +32,7 @@ export class UrlFragmentEditorComponent {
   @Input() maxLength!: number;
   // The type of fragment, such as "story" or "topic".
   @Input() fragmentType!: string;
-  // The URL prefix, and the URL fragment is appended to generate the URL for accessing the page.
+  // The URL prefix. The URL fragment is appended to this prefix to generate the URL for accessing the page.
   @Input() generatedUrlPrefix!: string;
   // Whether the URL fragment already exists.
   @Input() fragmentIsDuplicate!: boolean;

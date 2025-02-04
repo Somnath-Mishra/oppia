@@ -76,11 +76,10 @@
             </div>
             <UrlFragmentEditorComponent label="Url Fragment"
                                         placeholder="Enter the URL fragment for the story."
-                                        [maxLength]="MAX_CHARS_IN_STORY_URL_FRAGMENT"
+                                        maxLength="{{ MAX_CHARS_IN_STORY_URL_FRAGMENT }}"
                                         fragmentType="story"
                                         [generatedUrlPrefix]="generatedUrlPrefix"
                                         [fragmentIsDuplicate]="storyUrlFragmentExists"
-                                        inputId="storyUrlFragment"
                                         [(urlFragment)]="editableUrlFragment"
                                         [disabled]="false"
                                         (blur)="updateStoryUrlFragment(editableUrlFragment)"

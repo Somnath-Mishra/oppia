@@ -52,11 +52,10 @@
               </div>
             </div>
             <UrlFragmentEditorComponent label="Topic URL Fragment"
-                                        [maxLength]="maxCharsInTopicUrlFragment"
+                                        maxLength="{{maxCharsInTopicUrlFragment}}"
                                         fragmentType="topic"
                                         [generatedUrlPrefix]="generatedUrlPrefix"
                                         [fragmentIsDuplicate]="topicUrlFragmentExists"
-                                        inputId="topicUrlFragment"
                                         [(urlFragment)]="editableTopicUrlFragment"
                                         [disabled]="!topicRights.canEditTopic()"
                                         (blur)="updateTopicUrlFragment(editableTopicUrlFragment)"

@@ -39,6 +39,8 @@ import {DeleteChapterModalComponent} from '../modal-templates/delete-chapter-mod
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {StoryNode} from 'domain/story/story-node.model';
 import {PlatformFeatureService} from '../../../services/platform-feature.service';
+import {UrlFragmentEditorComponent} from '../../../components/url-fragment-editor/url-fragment-editor.component';
+import {By} from '@angular/platform-browser';
 
 class MockNgbModalRef {
   componentInstance: {
@@ -83,6 +85,7 @@ describe('Story Editor Component having three story nodes', () => {
         StoryEditorComponent,
         NewChapterTitleModalComponent,
         DeleteChapterModalComponent,
+        UrlFragmentEditorComponent,
       ],
       providers: [
         WindowDimensionsService,
@@ -779,4 +782,19 @@ describe('Story Editor Component having three story nodes', () => {
     expect(chaptersAreBeingPublishedSpy).toHaveBeenCalledWith(true);
     expect(newChapterPublicationIsDisabledSpy).toHaveBeenCalledWith(true);
   });
+
+  // Temp it('should call onStoryEditorUrlFragmentChange when urlFragmentChange event is emitted', () => {
+  //   spyOn(component, 'onStoryEditorUrlFragmentChange');
+  //   const childComponent = fixture.debugElement.query(By.directive(UrlFragmentEditorComponent));
+  //   const testFragment = 'test-story-url-fragment';
+  //   childComponent.triggerEventHandler('urlFragmentChange', testFragment);
+  //   expect(component.onStoryEditorUrlFragmentChange).toHaveBeenCalledWith(testFragment);
+  // });
+
+  // it('should call updateStoryUrlFragment when blur event is triggered', () => {
+  //   spyOn(component, 'updateStoryUrlFragment');
+  //   const childComponent = fixture.debugElement.query(By.directive(UrlFragmentEditorComponent));
+  //   childComponent.triggerEventHandler('blur', {});
+  //   expect(component.updateStoryUrlFragment).toHaveBeenCalled();
+  // });
 });

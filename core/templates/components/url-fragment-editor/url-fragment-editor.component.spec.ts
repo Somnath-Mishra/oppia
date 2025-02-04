@@ -16,9 +16,9 @@
  * @fileoverview Unit tests for UrlFragmentEditorComponent.
  */
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
-import { UrlFragmentEditorComponent } from './url-fragment-editor.component';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {FormsModule} from '@angular/forms';
+import {UrlFragmentEditorComponent} from './url-fragment-editor.component';
 
 describe('UrlFragmentEditorComponent', () => {
   let component: UrlFragmentEditorComponent;
@@ -67,7 +67,9 @@ describe('UrlFragmentEditorComponent', () => {
     component.urlFragment = 'New Fragment';
     component.onChange();
     expect(component.urlFragment).toBe('new-fragment');
-    expect(component.urlFragmentChange.emit).toHaveBeenCalledWith('new-fragment');
+    expect(component.urlFragmentChange.emit).toHaveBeenCalledWith(
+      'new-fragment'
+    );
   });
 
   it('should apply valid URL fragment regex validation', () => {
@@ -75,10 +77,14 @@ describe('UrlFragmentEditorComponent', () => {
     const invalidFragment = 'Invalid Fragment!';
 
     component.urlFragment = validFragment;
-    expect(component.validUrlFragmentRegex.test(component.urlFragment)).toBeTrue();
+    expect(
+      component.validUrlFragmentRegex.test(component.urlFragment)
+    ).toBeTrue();
 
     component.urlFragment = invalidFragment;
-    expect(component.validUrlFragmentRegex.test(component.urlFragment)).toBeFalse();
+    expect(
+      component.validUrlFragmentRegex.test(component.urlFragment)
+    ).toBeFalse();
   });
 
   it('should display error message for invalid URL fragments', () => {
@@ -108,9 +114,10 @@ describe('UrlFragmentEditorComponent', () => {
     component.fragmentIsDuplicate = true;
     fixture.detectChanges();
 
-    const duplicateErrorElement: HTMLElement = fixture.nativeElement.querySelector(
-      '.oppia-input-box-subtitle.text-danger em'
-    );
+    const duplicateErrorElement: HTMLElement =
+      fixture.nativeElement.querySelector(
+        '.oppia-input-box-subtitle.text-danger em'
+      );
     expect(duplicateErrorElement.textContent?.trim()).toBe(
       'This topic URL fragment already exists.'
     );
@@ -120,19 +127,31 @@ describe('UrlFragmentEditorComponent', () => {
     component.fragmentIsDuplicate = false;
     fixture.detectChanges();
 
-    const duplicateErrorElement: HTMLElement = fixture.nativeElement.querySelector(
-      '.oppia-input-box-subtitle.text-danger em'
-    );
+    const duplicateErrorElement: HTMLElement =
+      fixture.nativeElement.querySelector(
+        '.oppia-input-box-subtitle.text-danger em'
+      );
     expect(duplicateErrorElement).toBeNull();
   });
 
-  it('should enable input field when disabled input is false', () => {
+  it('should enable input field when disabled input is false', async () => {
     component.disabled = false;
+    await fixture.whenStable();
     fixture.detectChanges();
 
-    const inputElement: HTMLInputElement = fixture.nativeElement.querySelector(
-      'input'
-    );
+    const inputElement: HTMLInputElement =
+      fixture.nativeElement.querySelector('input');
     expect(inputElement.disabled).toBeFalse();
   });
+
+  // Temp it('should disable input field when disabled input is true', async() => {
+  //   component.disabled = true;
+  //   await fixture.whenStable();
+  //   fixture.detectChanges();
+
+  //   const inputElement: HTMLInputElement = fixture.nativeElement.querySelector(
+  //     'input'
+  //   );
+  //   expect(inputElement.disabled).toBeTrue();
+  // });
 });
