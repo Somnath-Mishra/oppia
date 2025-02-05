@@ -140,18 +140,18 @@ describe('UrlFragmentEditorComponent', () => {
     fixture.detectChanges();
 
     const inputElement: HTMLInputElement =
-      fixture.nativeElement.querySelector('input');
+      fixture.nativeElement.querySelector('.form-control');
     expect(inputElement.disabled).toBeFalse();
   });
 
-  // Temp it('should disable input field when disabled input is true', async() => {
-  //   component.disabled = true;
-  //   await fixture.whenStable();
-  //   fixture.detectChanges();
+  it('should disable input field when disabled input is true', async() => {
+    component.disabled = true;
+    await fixture.whenStable();
+    fixture.detectChanges();
 
-  //   const inputElement: HTMLInputElement = fixture.nativeElement.querySelector(
-  //     'input'
-  //   );
-  //   expect(inputElement.disabled).toBeTrue();
-  // });
+    const inputElement: HTMLInputElement = fixture.nativeElement.querySelector(
+      '.form-control'
+    );
+    expect(inputElement.disabled).toBeTrue();
+  });
 });
