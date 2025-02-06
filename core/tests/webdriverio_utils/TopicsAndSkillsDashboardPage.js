@@ -92,7 +92,7 @@ var TopicsAndSkillsDashboardPage = function () {
   var topicPageTitleFragmentField = $('.e2e-test-new-page-title-fragm-field');
   var topicResetFilters = $('.e2e-test-topic-filter-reset');
   var topicThumbnailButton = $('.e2e-test-photo-button');
-  var topicUrlFragmentField = $('.e2e-test-new-topic-url-fragment-field');
+  var urlFragmentEditorComponentSelector = $('.e2e-test-url-fragment-field');
   var topicsTable = $('.e2e-test-topics-table');
   var topicsTableMobile = $('.e2e-test-mobile-topic-table');
   var unassignSkillButton = $('.e2e-test-unassign-skill-button');
@@ -279,9 +279,12 @@ var TopicsAndSkillsDashboardPage = function () {
       'Create Topic modal takes too long to appear.'
     );
     await action.setValue('Topic name field', topicNameField, topicName);
+    await this.page.waitForSelector(urlFragmentEditorComponentSelector, {
+      visible: true,
+    });
     await action.setValue(
       'Topic URL fragment field',
-      topicUrlFragmentField,
+      urlFragmentEditorComponentSelector,
       topicUrlFragment
     );
     await action.setValue(

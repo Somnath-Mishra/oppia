@@ -1,7 +1,7 @@
 <div class="url-fragment-editor">
   <label class="form-heading">{{ label }}*</label>
   <input type="text"
-         class="form-control"
+         class="form-control e2e-test-url-fragment-field"
          [(ngModel)]="urlFragment"
          (blur)="onBlur()"
          [ngModelOptions]="{ standalone: true }"

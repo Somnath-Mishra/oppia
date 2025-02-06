@@ -69,8 +69,7 @@ const chapterExplorationIdField = '.e2e-test-exploration-id-input';
 
 const subtopicReassignHeader = 'div.subtopic-reassign-header';
 const subtopicTitleField = '.e2e-test-subtopic-title-field';
-('input.e2e-test-new-subtopic-url-fragment-field');
-const subtopicUrlFragmentField = '.e2e-test-subtopic-url-fragment-field';
+('input.e2e-test-url-fragment-field');
 const richTextAreaField = 'div.e2e-test-rte';
 const subtopicPhotoBoxButton =
   '.e2e-test-subtopic-thumbnail .e2e-test-photo-button';
@@ -119,7 +118,7 @@ const desktopSkillSelector = '.e2e-test-skill-description';
 const itemsPerPageDropdown = '.e2e-test-select-items-per-page-dropdown';
 const filterOptionSelector = '.mat-option-text';
 const topicNameField = '.e2e-test-topic-name-field';
-const updateTopicUrlFragmentField = '.e2e-test-topic-url-fragment-field';
+const urlFragmentEditorComponentSelector = '.e2e-test-url-fragment-field';
 const errorPageHeadingSelector = '.e2e-test-error-page-heading';
 const createNewTopicMobileButton = '.e2e-test-create-topic-mobile-button';
 const createNewTopicButton = '.e2e-test-create-topic-button';
@@ -401,8 +400,24 @@ export class TopicManager extends BaseUser {
       await this.type(topicNameField, topicName);
     }
     if (urlFragment) {
-      await this.clearAllTextFrom(updateTopicUrlFragmentField);
-      await this.type(updateTopicUrlFragmentField, urlFragment);
+      await this.page.waitForSelector(urlFragmentEditorComponentSelector, {
+        visible: true,
+      });
+      const urlFragmentComponent = await this.page.$(
+        urlFragmentEditorComponentSelector
+      );
+      if (!urlFragmentComponent) {
+        throw new Error('URL Fragment Editor Component not found.');
+      }
+      const urlFragmentInput = await urlFragmentComponent.$('input');
+      if (!urlFragmentInput) {
+        throw new Error(
+          'Input field inside URL Fragment Editor Component not found.'
+        );
+      }
+      await urlFragmentInput.click({clickCount: 3});
+      await this.page.keyboard.press('Backspace');
+      await urlFragmentInput.type(urlFragment);
     }
     await this.clearAllTextFrom(updateTopicWebFragmentField);
     await this.type(updateTopicWebFragmentField, titleFragments);
@@ -2207,8 +2222,26 @@ export class TopicManager extends BaseUser {
   ): Promise<void> {
     await this.clearAllTextFrom(subtopicTitleField);
     await this.type(subtopicTitleField, title);
-    await this.clearAllTextFrom(subtopicUrlFragmentField);
-    await this.type(subtopicUrlFragmentField, urlFragment);
+    if (urlFragment) {
+      await this.page.waitForSelector(urlFragmentEditorComponentSelector, {
+        visible: true,
+      });
+      const urlFragmentComponent = await this.page.$(
+        urlFragmentEditorComponentSelector
+      );
+      if (!urlFragmentComponent) {
+        throw new Error('URL Fragment Editor Component not found.');
+      }
+      const urlFragmentInput = await urlFragmentComponent.$('input');
+      if (!urlFragmentInput) {
+        throw new Error(
+          'Input field inside URL Fragment Editor Component not found.'
+        );
+      }
+      await urlFragmentInput.click({clickCount: 3});
+      await this.page.keyboard.press('Backspace');
+      await urlFragmentInput.type(urlFragment);
+    }
 
     await this.clickOn(editSubtopicExplanationSelector);
     await this.page.waitForSelector(richTextAreaField, {visible: true});
