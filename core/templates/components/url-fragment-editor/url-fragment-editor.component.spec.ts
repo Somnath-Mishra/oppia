@@ -51,7 +51,7 @@ describe('UrlFragmentEditorComponent', () => {
   });
 
   it('should format URL fragment correctly', () => {
-    component.urlFragment = ' Test Fragment ';
+    component.urlFragment = '  Test Fragment   ';
     component.formatUrlFragment();
     expect(component.urlFragment).toBe('test-fragment');
   });
@@ -70,6 +70,20 @@ describe('UrlFragmentEditorComponent', () => {
     expect(component.urlFragmentChange.emit).toHaveBeenCalledWith(
       'new-fragment'
     );
+  });
+
+  it('should emit empty string when input is cleared', () => {
+    spyOn(component.urlFragmentChange, 'emit');
+    component.urlFragment = '';
+    component.onChange();
+    expect(component.urlFragment).toBe('');
+    expect(component.urlFragmentChange.emit).toHaveBeenCalledWith('');
+  });
+
+  it('should not change already formatted input', () => {
+    component.urlFragment = 'test-fragment';
+    component.onChange();
+    expect(component.urlFragment).toBe('test-fragment');
   });
 
   it('should apply valid URL fragment regex validation', () => {
@@ -144,14 +158,13 @@ describe('UrlFragmentEditorComponent', () => {
     expect(inputElement.disabled).toBeFalse();
   });
 
-  it('should disable input field when disabled input is true', async() => {
+  it('should disable input field when disabled input is true', async () => {
     component.disabled = true;
     await fixture.whenStable();
     fixture.detectChanges();
 
-    const inputElement: HTMLInputElement = fixture.nativeElement.querySelector(
-      '.form-control'
-    );
+    const inputElement: HTMLInputElement =
+      fixture.nativeElement.querySelector('.form-control');
     expect(inputElement.disabled).toBeTrue();
   });
 });

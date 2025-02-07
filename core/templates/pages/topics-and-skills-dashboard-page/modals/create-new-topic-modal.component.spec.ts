@@ -197,4 +197,14 @@ describe('Create new topic modal', () => {
       testFragment
     );
   });
+
+  it('should update newlyCreatedTopic.urlFragment and call onTopicUrlFragmentChange', () => {
+    spyOn(componentInstance, 'onTopicUrlFragmentChange');
+    const newUrlFragment = 'new-topic-url-fragment';
+    componentInstance.onUrlFragmentChange(newUrlFragment);
+    expect(componentInstance.newlyCreatedTopic.urlFragment).toBe(
+      newUrlFragment
+    );
+    expect(componentInstance.onTopicUrlFragmentChange).toHaveBeenCalled();
+  });
 });

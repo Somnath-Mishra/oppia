@@ -156,4 +156,12 @@ describe('Create New Story Modal Component', () => {
     childComponent.triggerEventHandler('urlFragmentChange', testFragment);
     expect(component.onUrlFragmentChange).toHaveBeenCalledWith(testFragment);
   });
+
+  it('should update story.urlFragment and call onStoryUrlFragmentChange', () => {
+    spyOn(component, 'onStoryUrlFragmentChange');
+    const newUrlFragment = 'updated-story-url';
+    component.onUrlFragmentChange(newUrlFragment);
+    expect(component.story.urlFragment).toBe(newUrlFragment);
+    expect(component.onStoryUrlFragmentChange).toHaveBeenCalled();
+  });
 });

@@ -445,4 +445,14 @@ describe('Subtopic editor tab', () => {
       testFragment
     );
   });
+
+  it('should update editableUrlFragment and call updateSubtopicUrlFragment', () => {
+    spyOn(component, 'updateSubtopicUrlFragment');
+    const newUrlFragment = 'new-subtopic-url';
+    component.onSubtopicUrlFragmentChange(newUrlFragment);
+    expect(component.editableUrlFragment).toBe(newUrlFragment);
+    expect(component.updateSubtopicUrlFragment).toHaveBeenCalledWith(
+      newUrlFragment
+    );
+  });
 });

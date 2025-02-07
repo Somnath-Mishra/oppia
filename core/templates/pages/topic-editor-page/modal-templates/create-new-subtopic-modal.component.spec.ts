@@ -335,4 +335,12 @@ describe('create new subtopic modal', function () {
     childComponent.triggerEventHandler('urlFragmentChange', testFragment);
     expect(component.onUrlFragmentChange).toHaveBeenCalledWith(testFragment);
   });
+
+  it('should update editableUrlFragment and call checkSubtopicExistence', () => {
+    spyOn(component, 'checkSubtopicExistence');
+    const newUrlFragment = 'new-url-fragment';
+    component.onUrlFragmentChange(newUrlFragment);
+    expect(component.editableUrlFragment).toBe(newUrlFragment);
+    expect(component.checkSubtopicExistence).toHaveBeenCalled();
+  });
 });

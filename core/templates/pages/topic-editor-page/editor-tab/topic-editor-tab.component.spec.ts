@@ -874,4 +874,14 @@ describe('Topic editor tab directive', () => {
     childComponent.triggerEventHandler('blur', {});
     expect(component.updateTopicUrlFragment).toHaveBeenCalled();
   });
+
+  it('should update editableTopicUrlFragment and call updateTopicUrlFragment', () => {
+    spyOn(component, 'updateTopicUrlFragment');
+    const newUrlFragment = 'new-topic-url';
+    component.onChangeTopicEditorUrlFragment(newUrlFragment);
+    expect(component.editableTopicUrlFragment).toBe(newUrlFragment);
+    expect(component.updateTopicUrlFragment).toHaveBeenCalledWith(
+      newUrlFragment
+    );
+  });
 });

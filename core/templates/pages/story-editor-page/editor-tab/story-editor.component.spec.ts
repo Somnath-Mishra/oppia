@@ -40,7 +40,7 @@ import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {StoryNode} from 'domain/story/story-node.model';
 import {PlatformFeatureService} from '../../../services/platform-feature.service';
 import {UrlFragmentEditorComponent} from '../../../components/url-fragment-editor/url-fragment-editor.component';
-// Temp import {By} from '@angular/platform-browser';
+import {By} from '@angular/platform-browser';
 
 class MockNgbModalRef {
   componentInstance: {
@@ -116,10 +116,6 @@ describe('Story Editor Component having three story nodes', () => {
     windowRef = TestBed.inject(WindowRef);
     storyUpdateService = TestBed.inject(StoryUpdateService);
     storyEditorStateService = TestBed.inject(StoryEditorStateService);
-    component.MAX_CHARS_IN_STORY_URL_FRAGMENT = 50;
-    component.generatedUrlPrefix = 'https://example.com/';
-    component.storyUrlFragmentExists = false;
-    component.editableUrlFragment = 'initial-value';
 
     let sampleStoryBackendObject = {
       id: 'sample_story_id',
@@ -787,20 +783,13 @@ describe('Story Editor Component having three story nodes', () => {
     expect(newChapterPublicationIsDisabledSpy).toHaveBeenCalledWith(true);
   });
 
-  // Temp it('should update editableUrlFragment when UrlFragmentEditorComponent emits urlFragmentChange', () => {
-  //   const urlFragmentEditor = fixture.debugElement.query(By.directive(UrlFragmentEditorComponent))
-  //     .componentInstance as UrlFragmentEditorComponent;
-  //   const testFragment = 'test-url';
-  //   urlFragmentEditor.urlFragmentChange.emit(testFragment);
-  //   fixture.detectChanges();
-  //   expect(component.editableUrlFragment).toBe(testFragment);
-  // });
-
-  // it('should call updateStoryUrlFragment on blur', () => {
-  //   spyOn(component, 'updateStoryUrlFragment');
-  //   const urlFragmentEditor = fixture.debugElement.query(By.directive(UrlFragmentEditorComponent));
-  //   urlFragmentEditor.triggerEventHandler('blur', {});
-  //   fixture.detectChanges();
-  //   expect(component.updateStoryUrlFragment).toHaveBeenCalledWith(component.editableUrlFragment);
-  // });
+  it('should update editableUrlFragment and call updateStoryUrlFragment', () => {
+    spyOn(component, 'updateStoryUrlFragment');
+    const newUrlFragment = 'new-story-url';
+    component.onStoryEditorUrlFragmentChange(newUrlFragment);
+    expect(component.editableUrlFragment).toBe(newUrlFragment);
+    expect(component.updateStoryUrlFragment).toHaveBeenCalledWith(
+      newUrlFragment
+    );
+  });
 });
