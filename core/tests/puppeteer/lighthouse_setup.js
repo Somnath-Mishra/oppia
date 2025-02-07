@@ -258,8 +258,7 @@ const getTopicEditorUrl = async function (browser, page) {
     const urlFragmentComponent = await page.$(
       urlFragmentEditorComponentSelector
     );
-    const urlFragmentInput = await urlFragmentComponent.$('input');
-    await urlFragmentInput.type('topic-tasd-one');
+    await urlFragmentComponent.type('topic-tasd-one');
     await page.type(topicDescriptionField, 'Topic 1 description');
     await page.type(topicPageTitleFragmField, 'page-fragment');
     await page.click(topicThumbnailButton);
@@ -309,8 +308,7 @@ const getStoryEditorUrl = async function (browser, page) {
     const urlFragmentComponent = await page.$(
       urlFragmentEditorComponentSelector
     );
-    const urlFragmentInput = await urlFragmentComponent.$('input');
-    await urlFragmentInput.type('storyurlone');
+    await urlFragmentComponent.type('storyurlone');
     await page.type(storyDescriptionField, 'Story 1 description');
     await page.click(storyThumbnailButton);
     await page.waitForSelector(storyUploadButton, {visible: true});

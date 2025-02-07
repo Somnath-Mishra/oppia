@@ -40,7 +40,6 @@ import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {StoryNode} from 'domain/story/story-node.model';
 import {PlatformFeatureService} from '../../../services/platform-feature.service';
 import {UrlFragmentEditorComponent} from '../../../components/url-fragment-editor/url-fragment-editor.component';
-import {By} from '@angular/platform-browser';
 
 class MockNgbModalRef {
   componentInstance: {
