@@ -255,10 +255,7 @@ const getTopicEditorUrl = async function (browser, page) {
     await page.waitForSelector(urlFragmentEditorComponentSelector, {
       visible: true,
     });
-    const urlFragmentComponent = await page.$(
-      urlFragmentEditorComponentSelector
-    );
-    await urlFragmentComponent.type('topic-tasd-one');
+    await page.type(urlFragmentEditorComponentSelector, 'topic-tasd-one');
     await page.type(topicDescriptionField, 'Topic 1 description');
     await page.type(topicPageTitleFragmField, 'page-fragment');
     await page.click(topicThumbnailButton);
@@ -305,10 +302,7 @@ const getStoryEditorUrl = async function (browser, page) {
     await page.waitForSelector(urlFragmentEditorComponentSelector, {
       visible: true,
     });
-    const urlFragmentComponent = await page.$(
-      urlFragmentEditorComponentSelector
-    );
-    await urlFragmentComponent.type('storyurlone');
+    await page.type(urlFragmentEditorComponentSelector, 'storyurlone');
     await page.type(storyDescriptionField, 'Story 1 description');
     await page.click(storyThumbnailButton);
     await page.waitForSelector(storyUploadButton, {visible: true});
@@ -361,6 +355,7 @@ const getSkillEditorUrl = async function (browser, page) {
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log(e);
+    console.error('topicEditorUrl = ', topicEditorUrl);
     process.exit(1);
   }
 };

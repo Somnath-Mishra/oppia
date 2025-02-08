@@ -379,19 +379,7 @@ export class CurriculumAdmin extends BaseUser {
     await this.page.waitForSelector(urlFragmentEditorComponentSelector, {
       visible: true,
     });
-    const urlFragmentComponent = await this.page.$(
-      urlFragmentEditorComponentSelector
-    );
-    if (!urlFragmentComponent) {
-      throw new Error('URL Fragment Editor Component not found.');
-    }
-    const urlFragmentInput = await urlFragmentComponent.$('input');
-    if (!urlFragmentInput) {
-      throw new Error(
-        'Input field inside URL Fragment Editor Component not found.'
-      );
-    }
-    await urlFragmentInput.type(urlFragment);
+    await this.type(urlFragmentEditorComponentSelector, urlFragment);
     await this.type(topicWebFragmentField, name);
     await this.type(
       topicDescriptionField,
@@ -541,19 +529,7 @@ export class CurriculumAdmin extends BaseUser {
     await this.page.waitForSelector(urlFragmentEditorComponentSelector, {
       visible: true,
     });
-    const urlFragmentComponent = await this.page.$(
-      urlFragmentEditorComponentSelector
-    );
-    if (!urlFragmentComponent) {
-      throw new Error('URL Fragment Editor Component not found.');
-    }
-    const urlFragmentInput = await urlFragmentComponent.$('input');
-    if (!urlFragmentInput) {
-      throw new Error(
-        'Input field inside URL Fragment Editor Component not found.'
-      );
-    }
-    await urlFragmentInput.type(urlFragment);
+    await this.page.type(urlFragmentEditorComponentSelector, urlFragment);
 
     await this.clickOn(subtopicDescriptionEditorToggle);
     await this.page.waitForSelector(richTextAreaField, {visible: true});
@@ -916,19 +892,7 @@ export class CurriculumAdmin extends BaseUser {
     await this.page.waitForSelector(urlFragmentEditorComponentSelector, {
       visible: true,
     });
-    const urlFragmentComponent = await this.page.$(
-      urlFragmentEditorComponentSelector
-    );
-    if (!urlFragmentComponent) {
-      throw new Error('URL Fragment Editor Component not found.');
-    }
-    const urlFragmentInput = await urlFragmentComponent.$('input');
-    if (!urlFragmentInput) {
-      throw new Error(
-        'Input field inside URL Fragment Editor Component not found.'
-      );
-    }
-    await urlFragmentInput.type(storyUrlFragment);
+    await this.page.type(urlFragmentEditorComponentSelector, storyUrlFragment);
     await this.type(
       storyDescriptionField,
       `Story creation description for ${storyTitle}.`
@@ -982,19 +946,7 @@ export class CurriculumAdmin extends BaseUser {
     await this.page.waitForSelector(urlFragmentEditorComponentSelector, {
       visible: true,
     });
-    const urlFragmentComponent = await this.page.$(
-      urlFragmentEditorComponentSelector
-    );
-    if (!urlFragmentComponent) {
-      throw new Error('URL Fragment Editor Component not found.');
-    }
-    const urlFragmentInput = await urlFragmentComponent.$('input');
-    if (!urlFragmentInput) {
-      throw new Error(
-        'Input field inside URL Fragment Editor Component not found.'
-      );
-    }
-    await urlFragmentInput.type(storyUrlFragment);
+    await this.page.type(urlFragmentEditorComponentSelector, storyUrlFragment);
     await this.type(
       storyDescriptionField,
       `Story creation description for ${storyTitle}.`

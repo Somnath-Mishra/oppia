@@ -403,21 +403,11 @@ export class TopicManager extends BaseUser {
       await this.page.waitForSelector(urlFragmentEditorComponentSelector, {
         visible: true,
       });
-      const urlFragmentComponent = await this.page.$(
-        urlFragmentEditorComponentSelector
-      );
-      if (!urlFragmentComponent) {
-        throw new Error('URL Fragment Editor Component not found.');
-      }
-      const urlFragmentInput = await urlFragmentComponent.$('input');
-      if (!urlFragmentInput) {
-        throw new Error(
-          'Input field inside URL Fragment Editor Component not found.'
-        );
-      }
-      await urlFragmentInput.click({clickCount: 3});
+      await this.page.click(urlFragmentEditorComponentSelector, {
+        clickCount: 3,
+      });
       await this.page.keyboard.press('Backspace');
-      await urlFragmentInput.type(urlFragment);
+      await this.page.type(urlFragmentEditorComponentSelector, urlFragment);
     }
     await this.clearAllTextFrom(updateTopicWebFragmentField);
     await this.type(updateTopicWebFragmentField, titleFragments);
@@ -2226,21 +2216,11 @@ export class TopicManager extends BaseUser {
       await this.page.waitForSelector(urlFragmentEditorComponentSelector, {
         visible: true,
       });
-      const urlFragmentComponent = await this.page.$(
-        urlFragmentEditorComponentSelector
-      );
-      if (!urlFragmentComponent) {
-        throw new Error('URL Fragment Editor Component not found.');
-      }
-      const urlFragmentInput = await urlFragmentComponent.$('input');
-      if (!urlFragmentInput) {
-        throw new Error(
-          'Input field inside URL Fragment Editor Component not found.'
-        );
-      }
-      await urlFragmentInput.click({clickCount: 3});
+      await this.page.click(urlFragmentEditorComponentSelector, {
+        clickCount: 3,
+      });
       await this.page.keyboard.press('Backspace');
-      await urlFragmentInput.type(urlFragment);
+      await this.page.type(urlFragmentEditorComponentSelector, urlFragment);
     }
 
     await this.clickOn(editSubtopicExplanationSelector);
