@@ -279,9 +279,9 @@ var TopicsAndSkillsDashboardPage = function () {
       'Create Topic modal takes too long to appear.'
     );
     await action.setValue('Topic name field', topicNameField, topicName);
-    await this.page.waitForSelector(urlFragmentEditorComponentSelector, {
-      visible: true,
-    });
+    await waitFor.visibilityOf(urlFragmentEditorComponentSelector,
+      'Url fragment editor component takes too long to appear'
+    );
     await action.setValue(
       'Topic URL fragment field',
       urlFragmentEditorComponentSelector,

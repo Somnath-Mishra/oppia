@@ -355,7 +355,6 @@ const getSkillEditorUrl = async function (browser, page) {
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log(e);
-    console.error('topicEditorUrl = ', topicEditorUrl);
     process.exit(1);
   }
 };
