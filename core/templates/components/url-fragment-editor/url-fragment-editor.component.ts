@@ -20,7 +20,7 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {AppConstants} from 'app.constants';
 
 @Component({
-  selector: 'UrlFragmentEditorComponent',
+  selector: 'url-fragment-editor-component',
   templateUrl: './url-fragment-editor.component.html',
 })
 export class UrlFragmentEditorComponent {

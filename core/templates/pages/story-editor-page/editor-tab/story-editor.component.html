@@ -74,17 +74,17 @@
                         [oppiaFocusOn]="metaTagInputField">
               </textarea>
             </div>
-            <UrlFragmentEditorComponent label="Url Fragment"
+            <url-fragment-editor-component label="Url Fragment"
                                         placeholder="Enter the URL fragment for the story."
                                         maxLength="{{ MAX_CHARS_IN_STORY_URL_FRAGMENT }}"
                                         fragmentType="story"
                                         [generatedUrlPrefix]="generatedUrlPrefix"
                                         [fragmentIsDuplicate]="storyUrlFragmentExists"
-                                        [(urlFragment)]="editableUrlFragment"
                                         [disabled]="false"
-                                        (blur)="updateStoryUrlFragment(editableUrlFragment)"
-                                        (urlFragmentChange)="onStoryEditorUrlFragmentChange($event)">
-            </UrlFragmentEditorComponent>
+                                        [(urlFragment)]="editableUrlFragment"
+                                        (urlFragmentChange)="onStoryEditorUrlFragmentChange($event)"
+                                        (blur)="updateStoryUrlFragment(editableUrlFragment)">
+            </url-fragment-editor-component>
 
             <div class="story-thumbnail e2e-test-story-thumbnail">
               <label class="form-heading">Thumbnail Image*</label>

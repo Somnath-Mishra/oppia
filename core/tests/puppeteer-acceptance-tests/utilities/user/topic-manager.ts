@@ -403,10 +403,7 @@ export class TopicManager extends BaseUser {
       await this.page.waitForSelector(urlFragmentEditorComponentSelector, {
         visible: true,
       });
-      await this.page.click(urlFragmentEditorComponentSelector, {
-        clickCount: 3,
-      });
-      await this.page.keyboard.press('Backspace');
+      await this.clearAllTextFrom(urlFragmentEditorComponentSelector);
       await this.page.type(urlFragmentEditorComponentSelector, urlFragment);
     }
     await this.clearAllTextFrom(updateTopicWebFragmentField);
@@ -2216,10 +2213,7 @@ export class TopicManager extends BaseUser {
       await this.page.waitForSelector(urlFragmentEditorComponentSelector, {
         visible: true,
       });
-      await this.page.click(urlFragmentEditorComponentSelector, {
-        clickCount: 3,
-      });
-      await this.page.keyboard.press('Backspace');
+      await this.clearAllTextFrom(urlFragmentEditorComponentSelector);
       await this.page.type(urlFragmentEditorComponentSelector, urlFragment);
     }
 

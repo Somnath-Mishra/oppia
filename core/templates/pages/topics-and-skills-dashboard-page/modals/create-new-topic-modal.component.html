@@ -24,15 +24,16 @@
         </em>
       </div>
     </div>
-    <UrlFragmentEditorComponent label="Topic URL Fragment"
+    <url-fragment-editor-component label="Topic URL Fragment"
+                                placeholder="Enter url fragment for the topic."
                                 [maxLength]="MAX_CHARS_IN_TOPIC_URL_FRAGMENT"
                                 fragmentType="topic"
                                 [generatedUrlPrefix]="generatedUrlPrefix"
                                 [fragmentIsDuplicate]="topicUrlFragmentExists"
-                                [(urlFragment)]="newlyCreatedTopic.urlFragment"
                                 [disabled]="false"
+                                [(urlFragment)]="newlyCreatedTopic.urlFragment"
                                 (urlFragmentChange)="onUrlFragmentChange($event)">
-    </UrlFragmentEditorComponent>
+    </url-fragment-editor-component>
     <div class="create-new-topic-input-field">
       <div><span class="create-new-topic-input-label">Web Title Fragment for Web*</span></div>
       <div>

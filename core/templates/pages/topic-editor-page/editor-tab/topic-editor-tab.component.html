@@ -51,16 +51,17 @@
                 </em>
               </div>
             </div>
-            <UrlFragmentEditorComponent label="Topic URL Fragment"
+            <url-fragment-editor-component label="Topic URL Fragment"
+                                        placeholder="Enter the URL fragment for the topic."
                                         maxLength="{{maxCharsInTopicUrlFragment}}"
                                         fragmentType="topic"
                                         [generatedUrlPrefix]="generatedUrlPrefix"
                                         [fragmentIsDuplicate]="topicUrlFragmentExists"
-                                        [(urlFragment)]="editableTopicUrlFragment"
                                         [disabled]="!topicRights.canEditTopic()"
-                                        (blur)="updateTopicUrlFragment(editableTopicUrlFragment)"
-                                        (urlFragmentChange)="onChangeTopicEditorUrlFragment($event)">
-            </UrlFragmentEditorComponent>
+                                        [(urlFragment)]="editableTopicUrlFragment"
+                                        (urlFragmentChange)="onChangeTopicEditorUrlFragment($event)"
+                                        (blur)="updateTopicUrlFragment(editableTopicUrlFragment)">
+            </url-fragment-editor-component>
             <div class="topic-description" [ngClass]="{'has-error': editableDescriptionIsEmpty && topicDescriptionChanged}" tabindex="0">
               <label for="topicDescription"
                      class="form-heading e2e-test-topic-description-heading">

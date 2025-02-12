@@ -22,15 +22,16 @@
           <em>{{errorMsg}}</em>
         </span>
       </div>
-      <UrlFragmentEditorComponent label="Enter the url fragment for the subtopic"
+      <url-fragment-editor-component label="Enter the url fragment for the subtopic"
+                                  placeholder="Enter url fragment for the subtopic."
                                   [maxLength]="MAX_CHARS_IN_SUBTOPIC_URL_FRAGMENT"
                                   fragmentType="subtopic"
                                   [generatedUrlPrefix]="generatedUrlPrefix"
                                   [fragmentIsDuplicate]="subtopicUrlFragmentExists"
-                                  [(urlFragment)]="editableUrlFragment"
                                   [disabled]="false"
+                                  [(urlFragment)]="editableUrlFragment"
                                   (urlFragmentChange)="onUrlFragmentChange($event)">
-      </UrlFragmentEditorComponent>
+      </url-fragment-editor-component>
 
       <div class="create-new-subtopic-input-field create-new-subtopic-content">
         <div>

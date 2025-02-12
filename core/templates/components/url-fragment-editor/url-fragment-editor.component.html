@@ -1,14 +1,14 @@
 <div class="url-fragment-editor">
   <label class="form-heading">{{ label }}*</label>
   <input type="text"
-         class="form-control e2e-test-url-fragment-field"
+         class="form-control url-fragment-input e2e-test-url-fragment-field"
          [(ngModel)]="urlFragment"
          (blur)="onBlur()"
          [ngModelOptions]="{ standalone: true }"
          placeholder="{{placeholder}}"
          maxlength="{{maxLength}}"
          [attr.disabled]="disabled?'':null"
-         [ngClass]="{ 'is-invalid': fragmentIsDuplicate || !validUrlFragmentRegex.test(urlFragment.trim()) }"
+         [ngClass]="{ 'is-invalid': (urlFragment.trim()!=='') && (fragmentIsDuplicate || !validUrlFragmentRegex.test(urlFragment.trim())) }"
          (change)="onChange()">
   <span class="oppia-input-box-subtitle">
     <em>
@@ -27,3 +27,10 @@
     <em>This {{ fragmentType }} URL fragment already exists.</em>
   </div>
 </div>
+
+<style>
+  .url-fragment-input {
+    border: 1px solid #b9b5b5;
+    border-radius: 5px;
+  }
+</style>

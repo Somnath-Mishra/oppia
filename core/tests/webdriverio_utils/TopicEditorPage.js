@@ -301,9 +301,11 @@ var TopicEditorPage = function () {
       title
     );
 
-    await this.page.waitForSelector(urlFragmentEditorComponentSelector, {
-      visible: true,
-    });
+    await waitFor.visibilityOf(
+      urlFragmentEditorComponentSelector,
+      'Url fragment editor component takes too long to appear'
+    );
+    await urlFragmentEditorComponentSelector.scrollIntoView();
     await action.setValue(
       'Create new url fragment',
       urlFragmentEditorComponentSelector,
@@ -620,9 +622,10 @@ var TopicEditorPage = function () {
       newStoryDescriptionField,
       storyDescription
     );
-    await this.page.waitForSelector(urlFragmentEditorComponentSelector, {
-      visible: true,
-    });
+    await waitFor.visibilityOf(
+      urlFragmentEditorComponentSelector,
+      'Url fragment editor component takes too long to appear'
+    );
     await action.setValue(
       'Create new story url fragment',
       urlFragmentEditorComponentSelector,
