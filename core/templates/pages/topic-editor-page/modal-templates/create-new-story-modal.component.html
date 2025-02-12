@@ -43,14 +43,14 @@
       </span>
     </div>
     <url-fragment-editor-component label="Url Fragment"
-                                placeholder="Enter url fragment for the story."
-                                [maxLength]="MAX_CHARS_IN_STORY_URL_FRAGMENT"
-                                fragmentType="story"
-                                [generatedUrlPrefix]="generatedUrlPrefix"
-                                [fragmentIsDuplicate]="storyUrlFragmentExists"
-                                [disabled]="false"
-                                [(urlFragment)]="story.urlFragment"
-                                (urlFragmentChange)="onUrlFragmentChange($event)">
+                                   placeholder="Enter url fragment for the story."
+                                   [maxLength]="MAX_CHARS_IN_STORY_URL_FRAGMENT"
+                                   fragmentType="story"
+                                   [generatedUrlPrefix]="generatedUrlPrefix"
+                                   [fragmentIsDuplicate]="storyUrlFragmentExists"
+                                   [disabled]="false"
+                                   [(urlFragment)]="story.urlFragment"
+                                   (urlFragmentChange)="onUrlFragmentChange($event)">
     </url-fragment-editor-component>
     <div class="story-input story-input-thumbnail">
       <div class="story-input-header">

@@ -25,14 +25,14 @@
       </div>
     </div>
     <url-fragment-editor-component label="Topic URL Fragment"
-                                placeholder="Enter url fragment for the topic."
-                                [maxLength]="MAX_CHARS_IN_TOPIC_URL_FRAGMENT"
-                                fragmentType="topic"
-                                [generatedUrlPrefix]="generatedUrlPrefix"
-                                [fragmentIsDuplicate]="topicUrlFragmentExists"
-                                [disabled]="false"
-                                [(urlFragment)]="newlyCreatedTopic.urlFragment"
-                                (urlFragmentChange)="onUrlFragmentChange($event)">
+                                   placeholder="Enter url fragment for the topic."
+                                   [maxLength]="MAX_CHARS_IN_TOPIC_URL_FRAGMENT"
+                                   fragmentType="topic"
+                                   [generatedUrlPrefix]="generatedUrlPrefix"
+                                   [fragmentIsDuplicate]="topicUrlFragmentExists"
+                                   [disabled]="false"
+                                   [(urlFragment)]="newlyCreatedTopic.urlFragment"
+                                   (urlFragmentChange)="onUrlFragmentChange($event)">
     </url-fragment-editor-component>
     <div class="create-new-topic-input-field">
       <div><span class="create-new-topic-input-label">Web Title Fragment for Web*</span></div>

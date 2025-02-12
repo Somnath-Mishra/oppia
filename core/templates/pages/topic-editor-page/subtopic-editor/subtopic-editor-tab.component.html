@@ -60,14 +60,14 @@
             </span>
           </div>
           <url-fragment-editor-component label="Url Fragment"
-                                      placeholder="Enter url fragment for the subtopic."
-                                      [maxLength]="maxCharsInSubtopicUrlFragment"
-                                      fragmentType="subtopic"
-                                      [generatedUrlPrefix]="generatedUrlPrefix"
-                                      [fragmentIsDuplicate]="subtopicUrlFragmentExists"
-                                      [disabled]="false"
-                                      [(urlFragment)]="editableUrlFragment"
-                                      (urlFragmentChange)="onSubtopicUrlFragmentChange($event)">
+                                         placeholder="Enter url fragment for the subtopic."
+                                         [maxLength]="maxCharsInSubtopicUrlFragment"
+                                         fragmentType="subtopic"
+                                         [generatedUrlPrefix]="generatedUrlPrefix"
+                                         [fragmentIsDuplicate]="subtopicUrlFragmentExists"
+                                         [disabled]="false"
+                                         [(urlFragment)]="editableUrlFragment"
+                                         (urlFragmentChange)="onSubtopicUrlFragmentChange($event)">
           </url-fragment-editor-component>
           <div class="subtopic-html" tabindex="0">
             <div (click)="showSchemaEditor()"

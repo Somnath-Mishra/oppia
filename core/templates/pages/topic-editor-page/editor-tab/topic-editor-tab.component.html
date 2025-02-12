@@ -52,15 +52,15 @@
               </div>
             </div>
             <url-fragment-editor-component label="Topic URL Fragment"
-                                        placeholder="Enter the URL fragment for the topic."
-                                        maxLength="{{maxCharsInTopicUrlFragment}}"
-                                        fragmentType="topic"
-                                        [generatedUrlPrefix]="generatedUrlPrefix"
-                                        [fragmentIsDuplicate]="topicUrlFragmentExists"
-                                        [disabled]="!topicRights.canEditTopic()"
-                                        [(urlFragment)]="editableTopicUrlFragment"
-                                        (urlFragmentChange)="onChangeTopicEditorUrlFragment($event)"
-                                        (blur)="updateTopicUrlFragment(editableTopicUrlFragment)">
+                                           placeholder="Enter the URL fragment for the topic."
+                                           maxLength="{{maxCharsInTopicUrlFragment}}"
+                                           fragmentType="topic"
+                                           [generatedUrlPrefix]="generatedUrlPrefix"
+                                           [fragmentIsDuplicate]="topicUrlFragmentExists"
+                                           [disabled]="!topicRights.canEditTopic()"
+                                           [(urlFragment)]="editableTopicUrlFragment"
+                                           (urlFragmentChange)="onChangeTopicEditorUrlFragment($event)"
+                                           (blur)="updateTopicUrlFragment(editableTopicUrlFragment)">
             </url-fragment-editor-component>
             <div class="topic-description" [ngClass]="{'has-error': editableDescriptionIsEmpty && topicDescriptionChanged}" tabindex="0">
               <label for="topicDescription"

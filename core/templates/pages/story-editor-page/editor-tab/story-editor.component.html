@@ -75,15 +75,15 @@
               </textarea>
             </div>
             <url-fragment-editor-component label="Url Fragment"
-                                        placeholder="Enter the URL fragment for the story."
-                                        maxLength="{{ MAX_CHARS_IN_STORY_URL_FRAGMENT }}"
-                                        fragmentType="story"
-                                        [generatedUrlPrefix]="generatedUrlPrefix"
-                                        [fragmentIsDuplicate]="storyUrlFragmentExists"
-                                        [disabled]="false"
-                                        [(urlFragment)]="editableUrlFragment"
-                                        (urlFragmentChange)="onStoryEditorUrlFragmentChange($event)"
-                                        (blur)="updateStoryUrlFragment(editableUrlFragment)">
+                                           placeholder="Enter the URL fragment for the story."
+                                           maxLength="{{ MAX_CHARS_IN_STORY_URL_FRAGMENT }}"
+                                           fragmentType="story"
+                                           [generatedUrlPrefix]="generatedUrlPrefix"
+                                           [fragmentIsDuplicate]="storyUrlFragmentExists"
+                                           [disabled]="false"
+                                           [(urlFragment)]="editableUrlFragment"
+                                           (urlFragmentChange)="onStoryEditorUrlFragmentChange($event)"
+                                           (blur)="updateStoryUrlFragment(editableUrlFragment)">
             </url-fragment-editor-component>
 
             <div class="story-thumbnail e2e-test-story-thumbnail">
