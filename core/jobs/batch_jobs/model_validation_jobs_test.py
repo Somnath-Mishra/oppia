@@ -34,10 +34,9 @@ if MYPY: # pragma: no cover
     from mypy_imports import base_models
     from mypy_imports import user_models
 
-(auth_models, base_models, user_models) = (
-    models.Registry.import_models([
+(auth_models, base_models, user_models) = models.Registry.import_models([
     models.Names.AUTH, models.Names.BASE_MODEL, models.Names.USER
-]))
+])
 datastore_services = models.Registry.import_datastore_services()
 
 
