@@ -40,7 +40,9 @@ var TopicEditorPage = function () {
   var easyRubricDifficulty = $('.e2e-test-skill-difficulty-easy');
   var newStoryDescriptionField = $('.e2e-test-new-story-description-field');
   var newStoryTitleField = $('.e2e-test-new-story-title-field');
-  var urlFragmentEditorComponentSelector = $('.e2e-test-url-fragment-field');
+  var newStoryUrlFragmentField = $(
+    '.e2e-test-create-new-story-url-fragment-field .e2e-test-url-fragment-field'
+  );
   var newSubtopicEditorElement = $('.e2e-test-new-subtopic-editor');
   var pageEditor = $('.e2e-test-edit-subtopic-page-contents');
   var questionItem = $('.e2e-test-question-list-item');
@@ -83,6 +85,9 @@ var TopicEditorPage = function () {
   );
   var addSubtopicButton = $('.e2e-test-add-subtopic-button');
   var newSubtopicTitlefield = $('.e2e-test-new-subtopic-title-field');
+  var newSubtopicUrlFragmentField = $(
+    '.e2e-test-create-new-subtopic .e2e-test-url-fragment-field'
+  );
   var practiceTabCheckbox = $('.e2e-test-toggle-practice-tab');
   var publishTopicButton = $('.e2e-test-publish-topic-button');
   var reassignSkillButton = $('.e2e-test-reassign-skill-button');
@@ -302,13 +307,12 @@ var TopicEditorPage = function () {
     );
 
     await waitFor.visibilityOf(
-      urlFragmentEditorComponentSelector,
+      newSubtopicUrlFragmentField,
       'Url fragment editor component takes too long to appear'
     );
-    await urlFragmentEditorComponentSelector.scrollIntoView();
     await action.setValue(
       'Create new url fragment',
-      urlFragmentEditorComponentSelector,
+      newSubtopicUrlFragmentField,
       urlFragment
     );
 
@@ -623,12 +627,16 @@ var TopicEditorPage = function () {
       storyDescription
     );
     await waitFor.visibilityOf(
-      urlFragmentEditorComponentSelector,
+      newStoryUrlFragmentField,
       'Url fragment editor component takes too long to appear'
+    );
+    await action.clear(
+      'Create new story url fragment',
+      newStoryUrlFragmentField
     );
     await action.setValue(
       'Create new story url fragment',
-      urlFragmentEditorComponentSelector,
+      newStoryUrlFragmentField,
       storyUrlFragment
     );
 

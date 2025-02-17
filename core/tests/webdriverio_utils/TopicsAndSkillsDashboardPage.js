@@ -92,7 +92,9 @@ var TopicsAndSkillsDashboardPage = function () {
   var topicPageTitleFragmentField = $('.e2e-test-new-page-title-fragm-field');
   var topicResetFilters = $('.e2e-test-topic-filter-reset');
   var topicThumbnailButton = $('.e2e-test-photo-button');
-  var urlFragmentEditorComponentSelector = $('.e2e-test-url-fragment-field');
+  var topicUrlFragmentField = $(
+    '.e2e-test-new-topic-url-fragment-field .e2e-test-url-fragment-field'
+  );
   var topicsTable = $('.e2e-test-topics-table');
   var topicsTableMobile = $('.e2e-test-mobile-topic-table');
   var unassignSkillButton = $('.e2e-test-unassign-skill-button');
@@ -280,12 +282,12 @@ var TopicsAndSkillsDashboardPage = function () {
     );
     await action.setValue('Topic name field', topicNameField, topicName);
     await waitFor.visibilityOf(
-      urlFragmentEditorComponentSelector,
+      topicUrlFragmentField,
       'Url fragment editor component takes too long to appear'
     );
     await action.setValue(
       'Topic URL fragment field',
-      urlFragmentEditorComponentSelector,
+      topicUrlFragmentField,
       topicUrlFragment
     );
     await action.setValue(

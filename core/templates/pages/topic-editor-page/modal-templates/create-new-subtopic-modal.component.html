@@ -22,17 +22,18 @@
           <em>{{errorMsg}}</em>
         </span>
       </div>
-      <url-fragment-editor-component label="Enter the url fragment for the subtopic"
-                                     placeholder="Enter url fragment for the subtopic."
-                                     [maxLength]="MAX_CHARS_IN_SUBTOPIC_URL_FRAGMENT"
-                                     fragmentType="subtopic"
-                                     [generatedUrlPrefix]="generatedUrlPrefix"
-                                     [fragmentIsDuplicate]="subtopicUrlFragmentExists"
-                                     [disabled]="false"
-                                     [(urlFragment)]="editableUrlFragment"
-                                     (urlFragmentChange)="onUrlFragmentChange($event)">
-      </url-fragment-editor-component>
-
+      <div class="create-new-subtopic-input-field create-new-subtopic-content e2e-test-create-new-subtopic">
+        <url-fragment-editor-component label="Enter the url fragment for the subtopic"
+                                       placeholder="Enter url fragment for the subtopic."
+                                       [maxLength]="MAX_CHARS_IN_SUBTOPIC_URL_FRAGMENT"
+                                       fragmentType="subtopic"
+                                       [generatedUrlPrefix]="generatedUrlPrefix"
+                                       [fragmentIsDuplicate]="subtopicUrlFragmentExists"
+                                       [disabled]="false"
+                                       [(urlFragment)]="editableUrlFragment"
+                                       (urlFragmentChange)="onUrlFragmentChange($event)">
+        </url-fragment-editor-component>
+      </div>
       <div class="create-new-subtopic-input-field create-new-subtopic-content">
         <div>
           <strong>Explanation of the subtopic*</strong>
